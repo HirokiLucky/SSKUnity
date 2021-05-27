@@ -5,7 +5,6 @@ using UnityEngine;
 public class HelloWorld : MonoBehaviour
 {
     // Start is called before the first frame update
-    int n = 0;
     Vector3 cv = new Vector3(0f, 1f, -5f);
     Rigidbody rb = null;
     void Start()
@@ -16,24 +15,36 @@ public class HelloWorld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var sv = transform.position + cv;
-        Camera.main.transform.position = sv;
-        if (n == 0)
+        var sv = transform.position;
+        sv.y = 1f;
+        Camera.main.transform.position = sv + cv;
+
+        var v = Vector3.zero;
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            var v = new Vector3(0f, 0f, 200f);
-            rb.AddForce(v);
+            v = new Vector3(0f, 0f, 1f);
         }
 
-        n++;
-        if (n == 2500)
+        if (Input.GetKey(KeyCode.DownArrow))
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            var v = new Vector3(0f, 1f, -200f);
-            n = -2500;
-            rb.AddForce(v);
+            v = new Vector3(0f, 0f, -1f);
         }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            v = new Vector3(-1f, 0f, 0f);
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            v = new Vector3(1f, 0f, 0f);
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            v = new Vector3(0f, 10f, 0f);
+        }
+
+        rb.AddForce(v);
     }
 }
