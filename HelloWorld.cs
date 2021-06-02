@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class HelloWorld : MonoBehaviour
 {
     // Start is called before the first frame update
+    bool f = true;
+    Vector3 cv = new Vector3(0f, 1f, -5f);
     Rigidbody rb = null;
     void Start()
     {
@@ -15,34 +18,21 @@ public class HelloWorld : MonoBehaviour
     void Update()
     {
         var sv = transform.position;
-        sv += Vector3.forward * -5 + Vector3.up; 
+        sv.y = 1f;
+        Camera.main.transform.position = sv + cv;
 
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
-        var xv = Vector3.zero;
-        var yv = Vector3.zero;
+        var v = new Vector3(x, 0, y);
 
-        if (x > 0)
+        rb.AddForce(v);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Other")
         {
-            xv = Camera.main.transform.up;
+            GameObject.Destroy(collision.gameObject);
         }
-
-        if (x < 0)
-        {
-            xv = Camera.main.transform.up * -1;
-        }
-
-        if (y > 0)
-        {
-            yv = Camera.main.transform.forward;
-        }
-
-        if (y < 0)
-        {
-            yv = Camera.main.transform.forward * -1;
-        }
-
-        Camera.main.transform.position += yv / 100;
-        Camera.main.transform.Rotate(xv / 10);
     }
 }
