@@ -5,6 +5,7 @@ using UnityEngine;
 public class HelloWorld : MonoBehaviour
 {
     // Start is called before the first frame update
+    bool f = true;
     Vector3 cv = new Vector3(0f, 1f, -5f);
     Rigidbody rb = null;
     void Start()
@@ -19,38 +20,24 @@ public class HelloWorld : MonoBehaviour
         sv.y = 1f;
         Camera.main.transform.position = sv + cv;
 
-        var mp = Input.mousePosition;
-        var x = (int)(mp.x / (Screen.width / 3));
-        var y = (int) (mp.y / (Screen.height / 3));
-
-        var vx = Vector3.zero;
-        var vy = Vector3.zero;
+        var x = Input.GetAxis("Horizontal");
+        var y = Input.GetAxis("Vertical");
+        var v = new Vector3(x, 0, y);
         var vz = Vector3.zero;
-        switch (x)
-        {
-            case 0:
-                vx = new Vector3(-1f, 0f, 0f);
-                break;
-            case 2:
-                vx = new Vector3(1f, 0f, 0f);
-                break;
-        }
+        var jp = Input.GetAxis("Fire1");
 
-        switch (y)
+        if (jp > 0)
         {
-            case 0:
-                vy = new Vector3(0f, 0f, -1f);
-                break;
-            case 2:
-                vy = new Vector3(0f, 0f, 1f);
-                break;
+            if (f)
+            {
+                vz = new Vector3(0f, 1000f, 0f);
+            }
+            f = false;
         }
-
-        if (Input.GetMouseButtonDown(0))
+        else
         {
-            vz = new Vector3(0f, 1000f, 0f);
+            f = true;
         }
-        
-            rb.AddForce(vx + vy + vz);
+        rb.AddForce(v + vz);
     }
 }
