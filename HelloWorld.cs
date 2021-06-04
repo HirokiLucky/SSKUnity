@@ -32,17 +32,11 @@ public class HelloWorld : MonoBehaviour
     {
         if (collider.gameObject.tag == "Other")
         {
-            var h = (Behaviour) collider.gameObject.GetComponent("Halo");
-            h.enabled = true;
-        }
-    }
-    
-    void OnTriggerExit(Collider collider)
-    {
-        if (collider.gameObject.tag == "Other")
-        {
-            var h = (Behaviour) collider.gameObject.GetComponent("Halo");
-            h.enabled = false;
+            var ps = collider.gameObject.GetComponent<ParticleSystem>();
+            var ep = new ParticleSystem.EmitParams();
+            ep.startColor = Color.yellow;
+            ep.startSize = 0.1f;
+            ps.Emit(ep, 1000);
         }
     }
 }
