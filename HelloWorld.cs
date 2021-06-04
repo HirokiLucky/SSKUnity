@@ -28,11 +28,13 @@ public class HelloWorld : MonoBehaviour
         rb.AddForce(v);
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collider)
     {
-        if (collision.gameObject.tag == "Other")
+        if (collider.gameObject.tag == "Other")
         {
-            GameObject.Destroy(collision.gameObject);
+            var r = collider.gameObject.GetComponent<Renderer>();
+            r.material.color = new Color(0f, 0f, 0f, 0.25f);
+            r.material.SetFloat("_Metallic", 0f);
         }
     }
 }
