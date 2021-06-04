@@ -32,11 +32,9 @@ public class HelloWorld : MonoBehaviour
     {
         if (collider.gameObject.tag == "Other")
         {
-            var ps = collider.gameObject.GetComponent<ParticleSystem>();
-            var ep = new ParticleSystem.EmitParams();
-            ep.startColor = Color.yellow;
-            ep.startSize = 0.1f;
-            ps.Emit(ep, 1000);
+            var ex = GameObject.Find("BigExplosion");
+            var ps = ex.GetComponent<ParticleSystem>();
+            ps.Play();
         }
     }
 }
