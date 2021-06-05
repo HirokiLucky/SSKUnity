@@ -6,12 +6,13 @@ using UnityEngine;
 public class HelloWorld : MonoBehaviour
 {
     // Start is called before the first frame update
-    bool f = true;
     Vector3 cv = new Vector3(0f, 3f, -10f);
     Rigidbody rb = null;
+    private GameObject ex = null;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        ex = GameObject.Find("BigExplosion");
     }
 
     // Update is called once per frame
@@ -32,9 +33,10 @@ public class HelloWorld : MonoBehaviour
     {
         if (collider.gameObject.tag == "Other")
         {
-            var ex = GameObject.Find("BigExplosion");
-            var ps = ex.GetComponent<ParticleSystem>();
-            ps.Play();
+            var go = collider.gameObject;
+            ex.transform.position = go.transform.position;
+            ex.GetComponent<ParticleSystem>().Play();
+            GameObject.Destroy(go);
         }
     }
 }
