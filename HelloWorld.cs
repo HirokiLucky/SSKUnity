@@ -27,11 +27,13 @@ public class HelloWorld : MonoBehaviour
     bool finish = false;
     Vector3 cv = new Vector3(0f, 3f, -10f);
     Rigidbody rb = null;
+    GameObject ex = null;
     Text message = null;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         message = GameObject.Find("Message").GetComponent<Text>();
+        ex = GameObject.Find("BigExplosion");
     }
 
     void FixedUpdate()
@@ -46,7 +48,7 @@ public class HelloWorld : MonoBehaviour
         Camera.main.transform.position = sv + cv;
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
-        var v = new Vector3(x * param["level"] * 3, 0, y * param["level"] * 3);
+        var v = new Vector3(x * param["level"] * 10, 0, y * param["level"] * 10);
         rb.AddForce(v);
     }
 
@@ -87,6 +89,8 @@ public class HelloWorld : MonoBehaviour
         else
         {
             Debug.Log("Player: Gotcha!");
+            ex.transform.position = go.transform.position;
+            ex.GetComponent<ParticleSystem>().Play();
             AddExp(od.Level());
         }
     }
