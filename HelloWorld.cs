@@ -43,9 +43,6 @@ public class HelloWorld : MonoBehaviour
             return;
         }
 
-        var sv = transform.position;
-        sv.y = 1f;
-        Camera.main.transform.position = sv + cv;
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
         var v = new Vector3(x * param["level"] * 10, 0, y * param["level"] * 10);
