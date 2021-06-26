@@ -58,6 +58,11 @@ public class HumanoidScript : MonoBehaviour
                 animator.SetBool("Jump", true);
             }
         }
+
+        var fwd = Vector3.forward * animator.GetFloat("Speed");
+        transform.Translate(fwd / 25);
+        var drct = animator.GetFloat("Direction");
+        transform.Rotate(0, drct, 0);
     }
 }
 
