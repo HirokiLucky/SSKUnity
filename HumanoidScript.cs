@@ -14,55 +14,17 @@ public class HumanoidScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetFloat("Speed", 0f);
-        animator.SetFloat("Direction", 0f);
-        animator.SetBool("Jump", false);
-        animator.SetBool("Rest", false);
-
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            animator.SetFloat("Speed", 0.2f);
+            animator.SetBool("walk", !animator.GetBool("walk"));
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (animator.GetBool("walk"))
         {
-            animator.SetFloat("Speed", -0.2f);
+            var p = transform.position;
+            p += transform.forward * 0.01f;
+            transform.position = p;
         }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            var s = animator.GetFloat("Speed");
-            animator.SetFloat("Speed", s * 3f);
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            var d = animator.GetFloat("Direction");
-            animator.SetFloat("Direction", 0.2f);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            var d = animator.GetFloat("Direction");
-            animator.SetFloat("Direction", -0.2f);
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (animator.GetFloat("Speed") == 0f)
-            {
-                animator.SetBool("Rest", true);
-            }
-            else
-            {
-                animator.SetBool("Jump", true);
-            }
-        }
-
-        var fwd = Vector3.forward * animator.GetFloat("Speed");
-        transform.Translate(fwd / 25);
-        var drct = animator.GetFloat("Direction");
-        transform.Rotate(0, drct, 0);
     }
 }
 
