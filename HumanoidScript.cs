@@ -18,12 +18,23 @@ public class HumanoidScript : MonoBehaviour
         {
             animator.SetBool("walk", !animator.GetBool("walk"));
         }
+        
+        if (Input.GetKeyDown(KeyCode.Return) && animator.GetBool("walk"))
+        {
+            animator.SetBool("run", !animator.GetBool("run"));
+        }
 
         if (animator.GetBool("walk"))
         {
             var p = transform.position;
             p += transform.forward * 0.01f;
             transform.position = p;
+            if (animator.GetBool("run"))
+            {
+                p = transform.position;
+                p += transform.forward * 0.03f;
+                transform.position = p;
+            }
         }
     }
 }
