@@ -14,27 +14,32 @@ public class HumanoidScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var b = animator.GetFloat("Blend");
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             animator.SetBool("walk", !animator.GetBool("walk"));
         }
-        
-        if (Input.GetKeyDown(KeyCode.Return) && animator.GetBool("walk"))
+
+        if (animator.GetBool("walk"))
         {
-            animator.SetBool("run", !animator.GetBool("run"));
+            if (Input.GetKeyDown(KeyCode.RightShift))
+            {
+                b += 0.1f;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                b -= 0.1f;
+            }
+            animator.SetFloat("Blend", b);
         }
 
         if (animator.GetBool("walk"))
         {
             var p = transform.position;
-            p += transform.forward * 0.01f;
+            var d = 1.0f + b * 3;
+            p += transform.forward * (d / 100);
             transform.position = p;
-            if (animator.GetBool("run"))
-            {
-                p = transform.position;
-                p += transform.forward * 0.03f;
-                transform.position = p;
-            }
         }
     }
 }
