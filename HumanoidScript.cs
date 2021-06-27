@@ -14,6 +14,16 @@ public class HumanoidScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            animator.SetBool("sit", true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            animator.SetBool("sit", false);
+        }
+        
         var b = animator.GetFloat("Blend");
 
         if (Input.GetKeyDown(KeyCode.Space))
