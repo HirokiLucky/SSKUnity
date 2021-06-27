@@ -14,6 +14,12 @@ public class HumanoidScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+            animator.SetBool("jump", true);
+        }
+        
         if (Input.GetKeyDown(KeyCode.S))
         {
             animator.SetBool("sit", true);
